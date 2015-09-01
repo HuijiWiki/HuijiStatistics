@@ -126,7 +126,7 @@ static function getVisitorCountOnWikiSite($wikiSite,$fromTime,$toTime)
 //return $out;
 	//var_dump($out);
 //	var_dump(json_decode($out)->result)."\n"; 
-	return json_decode($out)->result; 
+	return json_decode($out); 
 }
  static function curl_get($funName)
 {
