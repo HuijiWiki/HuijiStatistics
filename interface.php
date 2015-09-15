@@ -4,8 +4,6 @@ class RecordStatistics
 {
 
 
-
-
 static function getRecentViewRecordsFromUserIdGroupByWikiSite($userId,$periodType)
 {
 	return self::curl_post('getRecentViewRecordsFromUserIdGroupByWikiSite',array('userId'=>$userId,'periodType'=>$periodType));
@@ -68,6 +66,15 @@ static function getEditorCountOnWikiSite($wikiSite,$fromTime,$toTime)
 {
 	return self::curl_post('getEditorCountOnWikiSite',array('wikiSite'=>$wikiSite,'fromTime'=>$fromTime,'toTime'=>$toTime));
 }
+
+static function getEditorCountGroupByWikiSite($fromTime,$toTime)
+{
+
+	return self::curl_post('getEditorCountGroupByWikiSite',array('fromTime'=>$fromTime,'toTime'=>$toTime));
+}
+
+
+
 
 
 ////////
@@ -154,6 +161,6 @@ static function getVisitorCountOnWikiSite($wikiSite,$fromTime,$toTime)
 //var_dump( RecordStatistics::getVisitorCountOnWikiSite("","",""));
 
 //var_dump( RecordStatistics::getRecentPageViewCountOnWikiSiteFromUserId(543,"","year"));
-
-
+//var_dump(RecordStatistics::getEditorCountGroupByWikiSite("",""));
+//var_dump(RecordStatistics::getEditRecordsFromUserIdGroupByWikiSite(-1,"",""));
 ?>
