@@ -129,6 +129,9 @@ static function getVisitorCountOnWikiSite($wikiSite,$fromTime,$toTime)
 	$ch = curl_init();
 	curl_setopt_array($ch,$curl_opt_a);
 	$out = curl_exec($ch);
+	if($out === false){
+	 	$out = '{"status":"fail"}';
+	}
 	curl_close($ch);
 //return $out;
 	//var_dump($out);
@@ -146,6 +149,9 @@ static function getVisitorCountOnWikiSite($wikiSite,$fromTime,$toTime)
 	$ch = curl_init();
 	curl_setopt_array($ch,$curl_opt_a);
 	$out = curl_exec($ch);
+	if($out === false){
+		$out = '{"status":"fail"}';
+	}
 	curl_close($ch);
 	echo json_decode($out)->result."\n"; 
 	return json_decode($out)->result; 
