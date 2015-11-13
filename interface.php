@@ -129,6 +129,10 @@ static function getVisitorCountOnWikiSite($wikiSite,$fromTime,$toTime)
 	$ch = curl_init();
 	curl_setopt_array($ch,$curl_opt_a);
 	$out = curl_exec($ch);
+	while($out === false && $count < 4){
+		$out = curl_exec($ch);
+		$count++;
+	}
 	if($out === false){
 	 	$out = '{"status":"fail"}';
 	}
@@ -149,6 +153,11 @@ static function getVisitorCountOnWikiSite($wikiSite,$fromTime,$toTime)
 	$ch = curl_init();
 	curl_setopt_array($ch,$curl_opt_a);
 	$out = curl_exec($ch);
+	$count = 0;
+	while($out === false && $count < 4){
+		$out = curl_exec($ch);
+		$count++;
+	}
 	if($out === false){
 		$out = '{"status":"fail"}';
 	}
@@ -161,7 +170,7 @@ static function getVisitorCountOnWikiSite($wikiSite,$fromTime,$toTime)
 
 }
 
-//var_dump( RecordStatistics::getPageViewCountOnWikiSiteFromUserId(543,"","",""));
+var_dump( RecordStatistics::getPageViewCountOnWikiSiteFromUserId(-1,"","",""));
 
 //var_dump( RecordStatistics::getRecentVisitorCountOnWikiSite("","year"));
 //var_dump( RecordStatistics::getVisitorCountOnWikiSite("","",""));
