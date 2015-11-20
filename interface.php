@@ -122,7 +122,7 @@ static function getVisitorCountOnWikiSite($wikiSite,$fromTime,$toTime)
 	$curl_opt_a = array(
 		CURLOPT_URL => $url,
 		CURLOPT_RETURNTRANSFER => 1,
-		CURLOPT_TIMEOUT => 3,
+		CURLOPT_TIMEOUT => 30,
 		CURLOPT_POST => 1,
 		CURLOPT_POSTFIELDS => http_build_query($data),
 	);
@@ -148,7 +148,7 @@ static function getVisitorCountOnWikiSite($wikiSite,$fromTime,$toTime)
 	$curl_opt_a = array(
 		CURLOPT_URL => $url,
 		CURLOPT_RETURNTRANSFER => 1,
-		CURLOPT_TIMEOUT => 1,
+		CURLOPT_TIMEOUT => 30,
 	);
 	$ch = curl_init();
 	curl_setopt_array($ch,$curl_opt_a);
@@ -170,7 +170,7 @@ static function getVisitorCountOnWikiSite($wikiSite,$fromTime,$toTime)
 
 }
 
-var_dump( RecordStatistics::getPageViewCountOnWikiSiteFromUserId(-1,"","",""));
+//var_dump( RecordStatistics::getPageViewCountOnWikiSiteFromUserId(-1,"","",""));
 
 //var_dump( RecordStatistics::getRecentVisitorCountOnWikiSite("","year"));
 //var_dump( RecordStatistics::getVisitorCountOnWikiSite("","",""));
