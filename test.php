@@ -142,41 +142,39 @@ static function getVisitorCountOnWikiSite($wikiSite,$fromTime,$toTime)
 //	var_dump(json_decode($out)->result)."\n"; 
 	return json_decode($out); 
 }
-
  static function curl_get($funName)
 {
-$url =  'http://10.251.139.166:50007/'.$funName;
-$curl_opt_a = array(
-	CURLOPT_URL => $url,
-	CURLOPT_RETURNTRANSFER => 1,
-	CURLOPT_TIMEOUT => 30,
-);
-$ch = curl_init();
-curl_setopt_array($ch,$curl_opt_a);
-$out = curl_exec($ch);
-$count = 0;
-while($out === false && $count < 4){
+	$url =  'http://10.251.139.166:50007/'.$funName;
+	$curl_opt_a = array(
+		CURLOPT_URL => $url,
+		CURLOPT_RETURNTRANSFER => 1,
+		CURLOPT_TIMEOUT => 30,
+	);
+	$ch = curl_init();
+	curl_setopt_array($ch,$curl_opt_a);
 	$out = curl_exec($ch);
-	$count++;
+	$count = 0;
+	while($out === false && $count < 4){
+		$out = curl_exec($ch);
+		$count++;
+	}
+	if($out === false){
+		$out = '{"status":"fail"}';
+	}
+	curl_close($ch);
+	echo json_decode($out)->result."\n"; 
+	return json_decode($out)->result; 
 }
-if($out === false){
-	$out = '{"status":"fail"}';
-}
-curl_close($ch);
-return json_decode($out)->result; 
-}
 
 
 
-# Faked Edit Record
-
-static function curl_post_json($path,$data_string)
-{
-	$url =  'http://test.huiji.wiki:50008/'.$path;
-	$header = array(
-		'Content-Type: application/json',
-		'Content-Length: '.strlen($data_string),
-		);
+	static function curl_post_json($path,$data_string)
+	{
+		$url =  'http://test.huiji.wiki:50008/'.$path;
+		$header = array(
+			'Content-Type: application/json',
+			'Content-Length: '.strlen($data_string),
+			);
 	$curl_opt_a = array(
 		CURLOPT_URL => $url,
 		CURLOPT_RETURNTRANSFER => 1,
@@ -188,55 +186,49 @@ static function curl_post_json($path,$data_string)
 	$ch = curl_init();
 	curl_setopt_array($ch,$curl_opt_a);
 	$out = curl_exec($ch);
-	while($out === false && $count < 4){
-		$out = curl_exec($ch);
-		$count++;
-	}
-	if($out === false){
-		$out = '{"status":"fail"}';
-	}
 	curl_close($ch);
-	return json_decode($out); 
-}
+	 
+	return $out; 
+	}
 
 
-static function upsertFakedPageEditRecord($userId,$count,$date)
-{
-	$data = json_encode(array(
+	static function upsertFakedPageEditRecord($userId,$count,$date)
+	{
+		$data = json_encode(array(
 					'userId' => $userId,
 					'count' => $count,
 					'targetDate' => $date
 					)
 				);
 
-	return self::curl_post_json('upsertFakedPageEditRecord',$data);
-}
+		return self::curl_post_json('upsertFakedPageEditRecord',$data);
+	}
 
-static function getFakedPageEditCountFromUserId($userId,$fromTime,$toTime){
-	$data = json_encode(array(
-				'userId' => $userId,
-				'fromTime' => $fromTime,
-				'toTime' => $toTime
-				)
-			);
-	$out = self::curl_post_json('getFakedPageEditCountFromUserId',$data);
-	$out->result = $out->result[0]->value;
-	return $out;
+	static function getFakedPageEditCountFromUserId($userId,$fromTime,$toTime){
+		$data = json_encode(array(
+					'userId' => $userId,
+					'fromTime' => $fromTime,
+					'toTime' => $toTime
+					)
+				);
+		$out = json_decode(self::curl_post_json('getFakedPageEditCountFromUserId',$data));
+		$out->result = $out->result[0]->value;
+		return $out;
 
-}
+	}
 
-static function getFakedPageEditRecordsFromUserIdGroupByDay($userId,$fromTime,$toTime){
-	$data = json_encode(array(
-				'userId' => $userId,
-				'fromTime' => $fromTime,
-				'toTime' => $toTime
-				)
-			);
+	static function getFakedPageEditRecordsFromUserIdGroupByDay($userId,$fromTime,$toTime){
+		$data = json_encode(array(
+					'userId' => $userId,
+					'fromTime' => $fromTime,
+					'toTime' => $toTime
+					)
+				);
 
-	return self::curl_post_json('getFakedPageEditRecordsFromUserIdGroupByDay',$data);
+		return json_decode(self::curl_post_json('getFakedPageEditRecordsFromUserIdGroupByDay',$data));
 
 
-}
+	}
 
 static function getAllPageEditRecordsFromUserIdGroupByDay($userId,$fromTime,$toTime)
 {
@@ -302,14 +294,20 @@ static function getAllPageEditCountFromUserId($userId,$fromTime,$toTime)
 
 
 
+
+
+
 }
 
 
-//var_dump(RecordStatistics::getAllPageEditRecordsFromUserIdGroupByDay(543,'',''));
-//var_dump(RecordStatistics::getAllPageEditCountFromUserId(1,'',''));
+var_dump(RecordStatistics::getAllPageEditRecordsFromUserIdGroupByDay(543,'',''));
 
-//var_dump(RecordStatistics::upsertFakedPageEditRecord(1,30,"2001-11-11"));
-//var_dump(RecordStatistics::getFakedPageEditRecordsFromUserIdGroupByDay(1,"2001-7-01","2001-12-12"));
+//var_dump(RecordStatistics::getAllPageEditCountFromUserId(543,'',''));
+
+//var_dump(RecordStatistics::upsertFakedPageEditRecord(543,30,"2015-9-9"));
+//var_dump(RecordStatistics::getFakedPageEditRecordsFromUserIdGroupByDay(1,"2000-01-01","2002-1-1"));
+//var_dump(RecordStatistics::getEditRecordsFromUserIdGroupByDay(1,"",""));
+
 //var_dump(RecordStatistics::getFakedPageEditCountFromUserId(1,"2001-7-01","2001-12-12"));
 //var_dump( RecordStatistics::getPageViewCountOnWikiSiteFromUserId(-1,"","",""));
 //var_dump( RecordStatistics::getRecentVisitorCountOnWikiSite("","year"));
