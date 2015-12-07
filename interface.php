@@ -242,9 +242,10 @@ static function getAllPageEditRecordsFromUserIdGroupByDay($userId,$fromTime,$toT
 {
 	$faked =RecordStatistics::getFakedPageEditRecordsFromUserIdGroupByDay($userId,$fromTime,$toTime);
 	$real = RecordStatistics::getEditRecordsFromUserIdGroupByDay($userId,$fromTime,$toTime);
-
-	$out = array();
+	
+	$out = new stdClass();
 	$result = array();
+	$temp = array();
 	if($faked->status == 'success' && $real->status == 'success'){
 		foreach($real->result as $object){
 			if($object->_id != NULL){	
@@ -260,28 +261,28 @@ static function getAllPageEditRecordsFromUserIdGroupByDay($userId,$fromTime,$toT
 				$result[$object->_id] = $object->value;
 			}
 		}
-		$out['status'] = 'success';
+		foreach($result as $key=>$value){
+			$ob = new stdClass();
+			$ob->_id = $key;
+			$ob->value = $value;
+			array_push($temp,$ob);
+		}
+
+		$result = $temp;
+		$out->status = 'success';
 	}else if($faked->status == 'success'){
-		foreach($faked->result as $object){
-			if($object->_id != NULL){	
-			$result[$object->_id]=$object->value;
-			}
-		}	
-		$out['status'] = 'success';		
+		$result = $faked->result;
+		$out->status = 'success';		
 	}else if($real->status == 'success'){
-		foreach($real->result as $object){
-			if($object->_id != NULL){	
-			$result[$object->_id]=$object->value;
-			}
-		}	
-		$out['status'] = 'success';
+		$result = $real->result;
+		$out->status = 'success';
 	}else{
-		$out['status'] = 'fail';
+		$out->status = 'fail';
 	}
 	
-	$out['value'] = $result;
+	$out->result = $result;
 	
-	return json_decode(json_encode($out));
+	return $out;
 }
 
 static function getAllPageEditCountFromUserId($userId,$fromTime,$toTime)
@@ -305,7 +306,7 @@ static function getAllPageEditCountFromUserId($userId,$fromTime,$toTime)
 }
 
 
-//var_dump(RecordStatistics::getAllPageEditRecordsFromUserIdGroupByDay(543,'',''));
+var_dump(RecordStatistics::getAllPageEditRecordsFromUserIdGroupByDay(543,'',''));
 //var_dump(RecordStatistics::getAllPageEditCountFromUserId(1,'',''));
 
 //var_dump(RecordStatistics::upsertFakedPageEditRecord(1,30,"2001-11-11"));
