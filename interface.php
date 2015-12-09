@@ -117,7 +117,7 @@ static function getVisitorCountOnWikiSite($wikiSite,$fromTime,$toTime)
 ////////
  static function curl_post($functionName,$data)
 {
-	$url =  'http://10.251.139.166:50007/'.$functionName;
+	$url =  'http://huijidata.com:50007/'.$functionName;
 
 	$curl_opt_a = array(
 		CURLOPT_URL => $url,
@@ -145,7 +145,7 @@ static function getVisitorCountOnWikiSite($wikiSite,$fromTime,$toTime)
 
  static function curl_get($funName)
 {
-$url =  'http://10.251.139.166:50007/'.$funName;
+$url =  'http://huijidata.com:50007/'.$funName;
 $curl_opt_a = array(
 	CURLOPT_URL => $url,
 	CURLOPT_RETURNTRANSFER => 1,
@@ -172,7 +172,7 @@ return json_decode($out)->result;
 
 static function curl_post_json($path,$data_string)
 {
-	$url =  'http://test.huiji.wiki:50008/'.$path;
+	$url =  'http://huijidata.com:50008/'.$path;
 	$header = array(
 		'Content-Type: application/json',
 		'Content-Length: '.strlen($data_string),
@@ -306,10 +306,9 @@ static function getAllPageEditCountFromUserId($userId,$fromTime,$toTime)
 }
 
 
-//var_dump(RecordStatistics::getAllPageEditRecordsFromUserIdGroupByDay(543,'',''));
+//var_dump(RecordStatistics::getAllPageEditRecordsFromUserIdGroupByDay(26,'',''));
 //var_dump(RecordStatistics::getAllPageEditCountFromUserId(1,'',''));
 
-//var_dump(RecordStatistics::upsertFakedPageEditRecord(1,30,"2001-11-11"));
 //var_dump(RecordStatistics::getFakedPageEditRecordsFromUserIdGroupByDay(1,"2001-7-01","2001-12-12"));
 //var_dump(RecordStatistics::getFakedPageEditCountFromUserId(1,"2001-7-01","2001-12-12"));
 //var_dump( RecordStatistics::getPageViewCountOnWikiSiteFromUserId(-1,"","",""));
@@ -319,4 +318,8 @@ static function getAllPageEditCountFromUserId($userId,$fromTime,$toTime)
 //var_dump( RecordStatistics::getRecentPageViewCountOnWikiSiteFromUserId(543,"","year"));
 //var_dump(RecordStatistics::getEditorCountGroupByWikiSite("",""));
 //var_dump(RecordStatistics::getEditRecordsFromUserIdGroupByWikiSite(-1,"",""));
+
+
+//var_dump(RecordStatistics::upsertFakedPageEditRecord(9,5,"2015-11-22"));
+
 ?>
