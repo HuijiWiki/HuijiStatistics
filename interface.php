@@ -306,7 +306,7 @@ static function getAllPageEditCountFromUserId($userId,$fromTime,$toTime)
 }
 
 
-var_dump(RecordStatistics::getAllPageEditRecordsFromUserIdGroupByDay(543,'',''));
+//var_dump(RecordStatistics::getAllPageEditRecordsFromUserIdGroupByDay(543,'',''));
 //var_dump(RecordStatistics::getAllPageEditCountFromUserId(1,'',''));
 
 //var_dump(RecordStatistics::upsertFakedPageEditRecord(1,30,"2001-11-11"));
