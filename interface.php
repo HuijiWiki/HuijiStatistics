@@ -188,6 +188,7 @@ static function curl_post_json($path,$data_string)
 	$ch = curl_init();
 	curl_setopt_array($ch,$curl_opt_a);
 	$out = curl_exec($ch);
+	$count = 0;
 	while($out === false && $count < 4){
 		$out = curl_exec($ch);
 		$count++;
