@@ -3,7 +3,7 @@
 class RecordStatistics
 {
 
-
+# View Records
 static function getRecentViewRecordsFromUserIdGroupByWikiSite($userId,$periodType)
 {
 	return self::curl_post('getRecentViewRecordsFromUserIdGroupByWikiSite',array('userId'=>$userId,'periodType'=>$periodType));
@@ -22,8 +22,7 @@ static function getViewRecordsFromUserIdGroupByDay($userId,$fromTime,$toTime)
 	return self::curl_post('getViewRecordsFromUserIdGroupByDay',$data);
 }
 
-
-///////////
+# Edit Records
 static function getRecentEditRecordsFromUserIdGroupByWikiSite($userId,$periodType)
 {
 	return self::curl_post('getRecentEditRecordsFromUserIdGroupByWikiSite',array('userId'=>$userId,'periodType'=>$periodType));
@@ -41,7 +40,7 @@ static function getEditRecordsFromUserIdGroupByDay($userId,$fromTime,$toTime)
 	return self::curl_post('getEditRecordsFromUserIdGroupByDay',$data);
 }
 
-////////
+#Edit Count
 static function getRecentPageEditCountOnWikiSiteFromUserId($userId,$wikiSite,$periodType)
 {
 	$data = array('userId'=>$userId,'wikiSite'=>$wikiSite,'periodType'=>$periodType);
@@ -55,8 +54,8 @@ static function getPageEditCountOnWikiSiteFromUserId($userId,$wikiSite,$fromTime
 
 
 }
-////////////////
 
+#Editor Count
 static function getRecentEditorCountOnWikiSite($wikiSite,$periodType)
 {
 	return self::curl_post('getRecentEditorCountOnWikiSite',array('wikiSite'=>$wikiSite,'periodType'=>$periodType));
@@ -74,10 +73,7 @@ static function getEditorCountGroupByWikiSite($fromTime,$toTime)
 }
 
 
-
-
-
-////////
+#View Count
 static function getRecentPageViewCountOnWikiSiteFromUserId($userId,$wikiSite,$periodType)
 {
 	$data = array('userId'=>$userId,'wikiSite'=>$wikiSite,'periodType'=>$periodType);
@@ -91,8 +87,8 @@ static function getPageViewCountOnWikiSiteFromUserId($userId,$wikiSite,$fromTime
 
 
 }
-////////////////
 
+#Visitor Count
 static function getRecentVisitorCountOnWikiSite($wikiSite,$periodType)
 {
 	return self::curl_post('getRecentVisitorCountOnWikiSite',array('wikiSite'=>$wikiSite,'periodType'=>$periodType));
@@ -106,101 +102,7 @@ static function getVisitorCountOnWikiSite($wikiSite,$fromTime,$toTime)
 
 
 
-
-
-
-
-
-
-
-
-////////
- static function curl_post($functionName,$data)
-{
-	$url =  'http://huijidata.com:50007/'.$functionName;
-
-	$curl_opt_a = array(
-		CURLOPT_URL => $url,
-		CURLOPT_RETURNTRANSFER => 1,
-		CURLOPT_TIMEOUT => 30,
-		CURLOPT_POST => 1,
-		CURLOPT_POSTFIELDS => http_build_query($data),
-	);
-	$ch = curl_init();
-	curl_setopt_array($ch,$curl_opt_a);
-	$out = curl_exec($ch);
-	while($out === false && $count < 4){
-		$out = curl_exec($ch);
-		$count++;
-	}
-	if($out === false){
-	 	$out = '{"status":"fail"}';
-	}
-	curl_close($ch);
-//return $out;
-	//var_dump($out);
-//	var_dump(json_decode($out)->result)."\n"; 
-	return json_decode($out); 
-}
-
- static function curl_get($funName)
-{
-$url =  'http://huijidata.com:50007/'.$funName;
-$curl_opt_a = array(
-	CURLOPT_URL => $url,
-	CURLOPT_RETURNTRANSFER => 1,
-	CURLOPT_TIMEOUT => 30,
-);
-$ch = curl_init();
-curl_setopt_array($ch,$curl_opt_a);
-$out = curl_exec($ch);
-$count = 0;
-while($out === false && $count < 4){
-	$out = curl_exec($ch);
-	$count++;
-}
-if($out === false){
-	$out = '{"status":"fail"}';
-}
-curl_close($ch);
-return json_decode($out)->result; 
-}
-
-
-
 # Faked Edit Record
-
-static function curl_post_json($path,$data_string)
-{
-	$url =  'http://huijidata.com:50008/'.$path;
-	$header = array(
-		'Content-Type: application/json',
-		'Content-Length: '.strlen($data_string),
-		);
-	$curl_opt_a = array(
-		CURLOPT_URL => $url,
-		CURLOPT_RETURNTRANSFER => 1,
-		CURLOPT_TIMEOUT => 300,
-		CURLOPT_POST => 1,
-		CURLOPT_POSTFIELDS =>$data_string,
-		CURLOPT_HTTPHEADER =>$header,
-	);
-	$ch = curl_init();
-	curl_setopt_array($ch,$curl_opt_a);
-	$out = curl_exec($ch);
-	$count = 0;
-	while($out === false && $count < 4){
-		$out = curl_exec($ch);
-		$count++;
-	}
-	if($out === false){
-		$out = '{"status":"fail"}';
-	}
-	curl_close($ch);
-	return json_decode($out); 
-}
-
-
 static function upsertFakedPageEditRecord($userId,$count,$date)
 {
 	$data = json_encode(array(
@@ -301,6 +203,63 @@ static function getAllPageEditCountFromUserId($userId,$fromTime,$toTime)
 		return $real;
 	}
 }	
+
+#CURL
+static function curl_post($functionName,$data)
+{
+	$url =  'http://huijidata.com:50007/'.$functionName;
+
+	$curl_opt_a = array(
+		CURLOPT_URL => $url,
+		CURLOPT_RETURNTRANSFER => 1,
+		CURLOPT_TIMEOUT => 30,
+		CURLOPT_POST => 1,
+		CURLOPT_POSTFIELDS => http_build_query($data),
+	);
+	$ch = curl_init();
+	curl_setopt_array($ch,$curl_opt_a);
+	$out = curl_exec($ch);
+	$count = 0;
+	while($out === false && $count < 4){
+		$out = curl_exec($ch);
+		$count++;
+	}
+	if($out === false){
+	 	$out = '{"status":"fail"}';
+	}
+	curl_close($ch);
+	return json_decode($out); 
+}
+
+static function curl_post_json($path,$data_string)
+{
+	$url =  'http://huijidata.com:50008/'.$path;
+	$header = array(
+		'Content-Type: application/json',
+		'Content-Length: '.strlen($data_string),
+		);
+	$curl_opt_a = array(
+		CURLOPT_URL => $url,
+		CURLOPT_RETURNTRANSFER => 1,
+		CURLOPT_TIMEOUT => 30,
+		CURLOPT_POST => 1,
+		CURLOPT_POSTFIELDS =>$data_string,
+		CURLOPT_HTTPHEADER =>$header,
+	);
+	$ch = curl_init();
+	curl_setopt_array($ch,$curl_opt_a);
+	$out = curl_exec($ch);
+	$count = 0;
+	while($out === false && $count < 4){
+		$out = curl_exec($ch);
+		$count++;
+	}
+	if($out === false){
+		$out = '{"status":"fail"}';
+	}
+	curl_close($ch);
+	return json_decode($out); 
+}
 
 
 
