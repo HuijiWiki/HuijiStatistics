@@ -125,11 +125,11 @@ static function curl_post_json($path,$function,$data_string)
 
 }
 
-//var_dump(RecordStatistics::insertOneFakedPageEditRecord(543,20,'2015-01-05'));
-//var_dump(RecordStatistics::getAllPageEditRecordsFromUserIdGroupByDay(543,'2016-03-17','2016-03-18'));
-//var_dump(RecordStatistics::getAllPageEditCountFromUserId(543,'2014-09-09','2014-09-09'));
-var_dump(RecordStatistics2::getPageEditCountOnWikiSiteFromUserId(-1,'','',''));
-//var_dump(RecordStatistics::getPageEditorRecordsGroupByWikiSite('',''));
-//var_dump(RecordStatistics::getPageViewCountOnWikiSiteFromUserId(543,'lotr','2016-03-18','2016-03-18'));
+//var_dump(RecordStatistics2::insertOneFakedPageEditRecord(543,20,'2015-01-05'));
+//var_dump(RecordStatistics2::getAllPageEditRecordsFromUserIdGroupByDay(543,'2016-03-17','2016-03-18'));
+//var_dump(RecordStatistics2::getAllPageEditCountFromUserId(543,'2014-09-09','2014-09-09'));
+//var_dump(RecordStatistics2::getPageEditCountOnWikiSiteFromUserId(-1,'','',''));
+//var_dump(RecordStatistics2::getPageEditorRecordsGroupByWikiSite('',''));
+//var_dump(RecordStatistics2::getPageViewCountOnWikiSiteFromUserId(543,'lotr','2016-03-18','2016-03-18'));
 
 ?>
