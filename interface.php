@@ -212,7 +212,7 @@ static function curl_post($functionName,$data)
 	$curl_opt_a = array(
 		CURLOPT_URL => $url,
 		CURLOPT_RETURNTRANSFER => 1,
-		CURLOPT_TIMEOUT => 30,
+		CURLOPT_TIMEOUT => 300,
 		CURLOPT_POST => 1,
 		CURLOPT_POSTFIELDS => http_build_query($data),
 	);
@@ -241,7 +241,7 @@ static function curl_post_json($path,$data_string)
 	$curl_opt_a = array(
 		CURLOPT_URL => $url,
 		CURLOPT_RETURNTRANSFER => 1,
-		CURLOPT_TIMEOUT => 30,
+		CURLOPT_TIMEOUT => 300,
 		CURLOPT_POST => 1,
 		CURLOPT_POSTFIELDS =>$data_string,
 		CURLOPT_HTTPHEADER =>$header,
@@ -265,12 +265,13 @@ static function curl_post_json($path,$data_string)
 
 }
 
-
-//var_dump(RecordStatistics::getAllPageEditRecordsFromUserIdGroupByDay(26,'',''));
-//var_dump(RecordStatistics::getAllPageEditCountFromUserId(1,'',''));
+//var_dump(RecordStatistics::getEditRecordsFromUserIdGroupByWikiSite(131,'2016-03-03','2016-03-03'));
+//var_dump(RecordStatistics::getAllPageEditRecordsFromUserIdGroupByDay(131,'2016-02-01','2016-04-05'));
+//var_dump(RecordStatistics::getAllPageEditCountFromUserId(543,'2016-03-06','2016-03-06'));
+//var_dump(RecordStatistics::getViewRecordsFromUserIdGroupByWikiSite("131",'2016-03-03','2016-03-03'));
 
 //var_dump(RecordStatistics::getFakedPageEditRecordsFromUserIdGroupByDay(1,"2001-7-01","2001-12-12"));
-//var_dump(RecordStatistics::getFakedPageEditCountFromUserId(1,"2001-7-01","2001-12-12"));
+//var_dump(RecordStatistics::getFakedPageEditCountFromUserId(543,"2016-03-06","2016-03-06"));
 //var_dump( RecordStatistics::getPageViewCountOnWikiSiteFromUserId(-1,"","",""));
 //var_dump( RecordStatistics::getRecentVisitorCountOnWikiSite("","year"));
 //var_dump( RecordStatistics::getVisitorCountOnWikiSite("","",""));
@@ -280,6 +281,6 @@ static function curl_post_json($path,$data_string)
 //var_dump(RecordStatistics::getEditRecordsFromUserIdGroupByWikiSite(-1,"",""));
 
 
-//var_dump(RecordStatistics::upsertFakedPageEditRecord(9,5,"2015-11-22"));
+//var_dump(RecordStatistics::upsertFakedPageEditRecord(543,13,"2016-03-06"));
 
 ?>
