@@ -93,7 +93,7 @@ static function getPageEditorRecordsGroupByWikiSite($fromDate,$toDate)
 
 static function curl_post_json($path,$function,$data_string)
 {
-	$url =  'http://121.42.144.9:8080/statisticQuery/webapi/'.$path.'/'.$function;
+	$url =  'http://huijidata.com:8080/statisticQuery/webapi/'.$path.'/'.$function;
 	$header = array(
 		'Content-Type: application/json',
 		'Content-Length: '.strlen($data_string),
@@ -128,7 +128,7 @@ static function curl_post_json($path,$function,$data_string)
 //var_dump(RecordStatistics::insertOneFakedPageEditRecord(543,20,'2015-01-05'));
 //var_dump(RecordStatistics::getAllPageEditRecordsFromUserIdGroupByDay(543,'2016-03-17','2016-03-18'));
 //var_dump(RecordStatistics::getAllPageEditCountFromUserId(543,'2014-09-09','2014-09-09'));
-//var_dump(RecordStatistics::getPageEditCountOnWikiSiteFromUserId(-1,'','',''));
+var_dump(RecordStatistics2::getPageEditCountOnWikiSiteFromUserId(-1,'','',''));
 //var_dump(RecordStatistics::getPageEditorRecordsGroupByWikiSite('',''));
 //var_dump(RecordStatistics::getPageViewCountOnWikiSiteFromUserId(543,'lotr','2016-03-18','2016-03-18'));
 
